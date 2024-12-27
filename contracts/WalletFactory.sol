@@ -6,11 +6,19 @@ import "./Wallet.sol";
 contract WalletFactory {
   mapping(address => Wallet) public wallets;
 
-  function createWallet() public {
+  function createWallet(
+    address _owner,
+    address[] memory _guardianAddress,
+    uint256 _guardiansRequired
+  ) public {
     require(address(wallets[msg.sender]) == address(0), "One wallet per address is allowed");
 
-    Wallet wallet = new Wallet();
-    wallet.transferOwnership(msg.sender);
+    Wallet wallet = new Wallet(
+      _owner,
+      _guardianAddress,
+      _guardiansRequired
+    );
+    //wallet.transferOwnership(msg.sender);
     
     wallets[msg.sender] = wallet;
   }
