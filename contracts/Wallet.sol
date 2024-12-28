@@ -72,7 +72,7 @@ contract Wallet {
         uint256 _guardiansRequired
     ) {
         require(
-            guardiansRequired <= _guardiansAddress.length,
+            _guardiansRequired <= _guardiansAddress.length,
             "Too much guardians"
         );
 
@@ -86,6 +86,27 @@ contract Wallet {
         }
 
         owner = _owner;
+        guardiansRequired = _guardiansRequired;
+    }
+
+    function setGuardians(
+        address[] memory _guardiansAddress,
+        uint256 _guardiansRequired) public onlyOwner
+    {
+        require(
+            _guardiansRequired <= _guardiansAddress.length,
+            "Too much guardians"
+        );
+
+        for (uint256 i = 0; i < _guardiansAddress.length; i++) {
+            require(
+                !isGuardian[_guardiansAddress[i]],
+                "Guardian already exists"
+            );
+            isGuardian[_guardiansAddress[i]] = true;
+            guardiansAddress.push(_guardiansAddress[i]);
+        }
+
         guardiansRequired = _guardiansRequired;
     }
 

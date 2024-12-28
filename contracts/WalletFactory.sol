@@ -18,7 +18,6 @@ contract WalletFactory {
       _guardianAddress,
       _guardiansRequired
     );
-    //wallet.transferOwnership(msg.sender);
     
     wallets[msg.sender] = wallet;
   }
